@@ -8,7 +8,7 @@ WebDriverIO. Well maintained and documented test automation framework on NodeJS.
 
 UiAutomator2. Main operational Android driver to use WebDriverIO NodeJS library.
 
-Mocha and Chai. Test structure setup, BDD layer and versatile assertion library (Chai).
+Mocha and Chai. Mocha for test structure setup, BDD layer [Mocha](https://mochajs.org/). Chai as versatile assertion library [Chai](https://github.com/chaijs/chai).
 
 ## Installation
 
@@ -51,3 +51,7 @@ https://github.com/appium/appium-inspector/releases
 https://appium.github.io/appium/docs/en/2.0
 
 https://appium.github.io/appium/docs/en/2.0/guides/caps/
+
+https://github.com/appium/appium-uiautomator2-driver#capabilities 
+
+Problem: Not all jukeboxes are active. Solution: Loop through available and get first active.
