@@ -1,0 +1,24 @@
+{
+  "name": "appium2-greenfield",
+  "version": "1.0.0",
+  "description": "Appium 2 test automation framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "tba"
+  },
+  "keywords": [
+    "appium2",
+    "uiautomator2"
+  ],
+  "author": "Maksym Krutskykh",
+  "license": "ISC",
+  "devDependencies": {
+    "webdriverio": "^7.26.0",
+    "chai": "^4.3.7",
+    "mocha": "^10.1.0"
+  }
+}
