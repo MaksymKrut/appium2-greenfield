@@ -4,11 +4,11 @@
   "description": "Appium 2 test automation framework",
   "main": "index.js",
   "scripts": {
-    "test": "npm run test"
+    "test": "./node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",
-    "url": "tba"
+    "url": "https://github.com/MaksymKrut/appium2-greenfield"
   },
   "keywords": [
     "appium2",

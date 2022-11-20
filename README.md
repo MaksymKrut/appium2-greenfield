@@ -8,6 +8,8 @@ WebDriverIO. Well maintained and documented test automation framework on NodeJS.
 
 UiAutomator2. Main operational Android driver to use WebDriverIO NodeJS library.
 
+Mocha and Chai. Test structure setup, BDD layer and versatile assertion library (Chai).
+
 ## Installation
 
 1. Open terminal window, clone the project to your machine with "`git clone {PROJECT_URL}`"
@@ -28,7 +30,7 @@ UiAutomator2. Main operational Android driver to use WebDriverIO NodeJS library.
 
 Start Appium server with command "`appium`" in one terminal window. Assure you have emulator up and running.
 
-Open other terminal window, navigate to project root and start tests with "`node index.js`"
+Open other terminal window, navigate to project root and start tests with "`npm test index.js`"
 
 ## Test writing tools:
 
@@ -49,6 +51,3 @@ https://github.com/appium/appium-inspector/releases
 https://appium.github.io/appium/docs/en/2.0
 
 https://appium.github.io/appium/docs/en/2.0/guides/caps/
-
-
-Pixel_8_API_32

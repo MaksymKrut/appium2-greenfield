@@ -15,15 +15,32 @@ const wdOpts = {
     capabilities,
 };
 
-async function runTest() {
-    const driver = await remote(wdOpts);
-    try {
+describe('User', function () {
+    this.timeout(60 * 1000);
+
+    let driver;
+    
+    before(async () => {
+        driver = await remote(wdOpts);
+    });
+
+    it('should be able to skip the welcome screen', async () => {
+        // assertions here
         const batteryItem = await driver.$('//*[@text="Battery"]');
         await batteryItem.click();
-    } finally {
-        await driver.pause(1000);
-        await driver.deleteSession();
-    }
-}
+    });
 
-runTest().catch(console.error);
+
+    it.skip('should be able to choose jukebox on home screen', async () => {
+        // assertions here
+    });
+
+
+    it.skip('should be able to navigate to jukebox screen', async () => {
+        // assertions here
+    });
+
+    after(async () => {
+        driver = await remote(wdOpts);
+    });
+});
