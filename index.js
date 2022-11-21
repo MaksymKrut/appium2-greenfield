@@ -23,7 +23,7 @@ describe('User', function () {
 
     let driver;
     let jukeboxName;
-    let jukeboxCurrentPlay;
+    let jukeboxHotArtists = [];
 
     before(async () => {
         driver = await remote(wdOpts);
@@ -79,6 +79,23 @@ describe('User', function () {
         console.log("\n\nName: jukeboxPageName: " + jukeboxPageName + "\n\n")
         console.log("\n\nName: jukeboxName: " + jukeboxName + "\n\n")
         expect(jukeboxPageName).to.equal(jukeboxName)
+
+        // Get current "HOT AT" list on jukebox screen
+        const jukeboxHotListSelector = 'new UiSelector().className("androidx.recyclerview.widget.RecyclerView").resourceId("com.touchtunes.android:id/rv_home_widget_recyclerview")';
+        const jukeboxHotList = await driver.$$(`android=${jukeboxHotListSelector}`);
+        await jukeboxHotList[0].waitForDisplayed({ timeout: 30000 });
+        console.log("\n\njukeboxHotList amount: " + jukeboxHotList.length + "\n\n")
+
+        for await (const jukeboxHotArtist of jukeboxHotList) {
+            const jukeboxArtistSelector = "//android.widget.LinearLayout/android.widget.TextView";
+            const jukeboxArtist = await jukeboxHotArtist.$(jukeboxArtistSelector);
+            const artist = await jukeboxArtist.getText()
+            jukeboxHotArtists.push(artist)
+        }
+
+        console.log("\n\njukeboxHotList artists: " + jukeboxHotArtists + "\n\n")
+
+        // Navigate to HOT AT and HOT ARTISTS
 
         await driver.pause(5 * 1000)
     });
