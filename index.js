@@ -2,6 +2,7 @@ const { remote } = require('webdriverio');
 const expect = require('chai').expect;
 const assert = require('chai').assert;
 const rootDir = require('path').resolve('./');
+const helpers = require('./utils/helpers')
 
 // PageObject files
 const welcomeScreen = require('./pages/WelcomeScreen')
@@ -23,6 +24,7 @@ const wdOpts = {
     capabilities,
 };
 
+// TODO Refactor all implicit waits with explicit curtain element waits
 describe('User', function () {
     this.timeout(120 * 1000);
 
@@ -48,40 +50,15 @@ describe('User', function () {
     it('should be able to navigate to jukebox screen', async () => {
         await jukeBoxScreen.acceptJukeBoxWelcomePopup(driver)
         const jukeboxPageName = await jukeBoxScreen.getJukeBoxName(driver)
+
         console.log("\n\nName: jukeboxPageName: " + jukeboxPageName + "\n\n")
         console.log("\n\nName: jukeboxName: " + jukeboxName + "\n\n")
+
         expect(jukeboxPageName).to.equal(jukeboxName)
 
-        // Swipe page half page up
-        console.log("\n\nSwiping now!\n\n")
-        await driver.touchPerform([
-            {
-                action: "press",
-                options: {
-                    x: 100,
-                    y: 900
-                }
-            },
-            { action: "wait", options: { mseconds: 0 } },
-            {
-                action: "moveTo",
-                options: {
-                    x: 100,
-                    y: 100
-                }
-            },
-            { action: "release" }
-        ]);
+        helpers.swipeVertical(driver, 900, 100)
 
-        // Login popup interaction, if any
-        try {
-            const agreeButtonSelector = "//*[@text='Cancel]";
-            const agreeButton = await driver.$(agreeButtonSelector);
-            await agreeButton.waitForDisplayed({ timeout: 10000 });
-            await agreeButton.click();
-        } catch (error) {
-            console.log("\n\nThere was no login popup!\n\n")
-        }
+        helpers.handleLoginPopup(driver, "Cancel")
 
         // Get current "HOT AT" list on jukebox screen
         const jukeboxHotListSelector = 'new UiSelector().className("androidx.recyclerview.widget.RecyclerView").resourceId("com.touchtunes.android:id/rv_home_widget_recyclerview")';
@@ -100,16 +77,7 @@ describe('User', function () {
 
         await driver.pause(5 * 1000)
 
-        // Login popup interaction, if any
-        try {
-            const agreeButtonSelector = "//*[@text='Cancel]";
-            const agreeButton = await driver.$(agreeButtonSelector);
-            await agreeButton.waitForDisplayed({ timeout: 10000 });
-            await agreeButton.click();
-        } catch (error) {
-            console.log("\n\nThere was no login popup!\n\n")
-        }
-
+        helpers.handleLoginPopup(driver, "Cancel")
 
         // Navigate to HOT AT and HOT ARTISTS
         const jukeboxHotAtSelector = 'new UiSelector().className("android.widget.TextView").resourceId("com.touchtunes.android:id/tv_home_row_title")';
@@ -118,15 +86,7 @@ describe('User', function () {
         await jukeboxHotAtElement.click()
         await driver.pause(5 * 1000)
 
-        // Login popup interaction, if any
-        try {
-            const agreeButtonSelector = "//*[@text='Cancel]";
-            const agreeButton = await driver.$(agreeButtonSelector);
-            await agreeButton.waitForDisplayed({ timeout: 10000 });
-            await agreeButton.click();
-        } catch (error) {
-            console.log("\n\nThere was no login popup!\n\n")
-        }
+        helpers.handleLoginPopup(driver, "Cancel")
 
         const jukeboxHotArtistsSelector = 'new UiSelector().className("android.widget.TextView").resourceId("com.touchtunes.android:id/ctv_item_row_title")';
         const jukeboxHotArtistsElement = await driver.$(`android=${jukeboxHotArtistsSelector}`)
