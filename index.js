@@ -3,6 +3,11 @@ const expect = require('chai').expect;
 const assert = require('chai').assert;
 const rootDir = require('path').resolve('./');
 
+// PageObject files
+const welcomeScreen = require('./pages/WelcomeScreen')
+const homeScreen = require('./pages/HomeScreen')
+const jukeBoxScreen = require('./pages/JukeBoxScreen')
+
 const capabilities = {
     platformName: 'Android',
     'appium:autoGrantPermissions': true,
@@ -31,52 +36,18 @@ describe('User', function () {
     });
 
     it('should be able to skip the welcome screen', async () => {
-        const skipSelector = "//android.widget.TextView[@text='Skip']"; 
-        const skipLink = await driver.$(skipSelector);
-        await skipLink.waitForDisplayed({ timeout: 60000 });
-        await skipLink.click();
-
+        await welcomeScreen.clickSkipButton(driver);
         await driver.pause(10 * 1000)
     });
 
     it('should be able to choose jukebox on home screen', async () => {
-        // Get full list of nearby jukeboxes, loop through them to find active and click it.
-        const jukeboxListSelector = "//androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup";
-        const jukeboxList = await driver.$$(jukeboxListSelector);
-        await jukeboxList[0].waitForDisplayed({ timeout: 60000 });
-
-        for await (const jukebox of jukeboxList) {
-            const jukeboxElementSelector = 'new UiSelector().resourceId("com.touchtunes.android:id/item_venue_subtitle")'
-            const jukeboxElement = await jukebox.$(`android=${jukeboxElementSelector}`)
-            const text = await jukeboxElement.getText()
-            if (!text.includes('offline')) {
-                const jukeboxNameSelector = 'new UiSelector().resourceId("com.touchtunes.android:id/item_venue_name")'
-                const jukeboxNameElement = await jukebox.$(`android=${jukeboxNameSelector}`)
-                jukeboxName = await jukeboxNameElement.getText()
-                console.log("\n\nName: clicked: " + jukeboxName + "\n\n")
-                jukeboxElement.click();
-                break;
-            }
-        }
-
+        jukeboxName = await homeScreen.chooseActiveJukeBox(driver)
         await driver.pause(10 * 1000)
     });
 
     it('should be able to navigate to jukebox screen', async () => {
-        // Welcome popup interaction, if any
-        try {
-            const agreeButtonSelector = "//android.widget.TextView[@text='Ok, Cool']";
-            const agreeButton = await driver.$(agreeButtonSelector);
-            await agreeButton.waitForDisplayed({ timeout: 10000 });
-            await agreeButton.click();
-        } catch (error) {
-            console.log("\n\nThere was not welcome to jukebox popup!\n\n")
-        }
-        // Get jukebox page name and assert its as expected
-        const jukeboxPageNameSelector = 'new UiSelector().resourceId("com.touchtunes.android:id/ttab_title_text")'
-        const jukeboxPageNameElement = await driver.$(`android=${jukeboxPageNameSelector}`)
-        await jukeboxPageNameElement.waitForDisplayed({ timeout: 60000 });
-        const jukeboxPageName = await jukeboxPageNameElement.getText()
+        await jukeBoxScreen.acceptJukeBoxWelcomePopup(driver)
+        const jukeboxPageName = await jukeBoxScreen.getJukeBoxName(driver)
         console.log("\n\nName: jukeboxPageName: " + jukeboxPageName + "\n\n")
         console.log("\n\nName: jukeboxName: " + jukeboxName + "\n\n")
         expect(jukeboxPageName).to.equal(jukeboxName)
