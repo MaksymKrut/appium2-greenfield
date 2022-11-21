@@ -55,4 +55,5 @@ https://appium.github.io/appium/docs/en/2.0/guides/caps/
 https://github.com/appium/appium-uiautomator2-driver#capabilities 
 
 Problem: Not all jukeboxes are active. Solution: Loop through available and get first active.
+Problem: Random state of currently playing artist/song on jukebox page. Can be either big or small album square. Solution: Swipe album up to hide.
 Problem: Random Welcome and Login popups. Solution: Added helper catcher for those popups.
