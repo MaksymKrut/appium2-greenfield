@@ -1,28 +1,12 @@
-const { remote } = require('webdriverio');
 const expect = require('chai').expect;
 const assert = require('chai').assert;
-const rootDir = require('path').resolve('./');
 const helpers = require('./utils/helpers')
+const driverUtil = require('./utils/driver')
 
 // PageObject files
 const welcomeScreen = require('./pages/WelcomeScreen')
 const homeScreen = require('./pages/HomeScreen')
 const jukeBoxScreen = require('./pages/JukeBoxScreen')
-
-const capabilities = {
-    platformName: 'Android',
-    'appium:autoGrantPermissions': true,
-    'appium:automationName': 'UiAutomator2',
-    'appium:deviceName': 'emulator-5554',
-    'appium:app': rootDir + '/assets/apk/testApk.apk'
-};
-
-const wdOpts = {
-    host: process.env.APPIUM_HOST || 'localhost',
-    port: parseInt(process.env.APPIUM_PORT, 10) || 4723,
-    logLevel: 'info',
-    capabilities,
-};
 
 // TODO Refactor all implicit waits with explicit curtain element waits
 describe('User', function () {
@@ -34,7 +18,7 @@ describe('User', function () {
     let jukeboxHotArtistsFromPage = [];
 
     before(async () => {
-        driver = await remote(wdOpts);
+        driver = await driverUtil.driverSetup()
         driver.setGeoLocation({ latitude: "45.36", longitude: "-75.74", altitude: "100" });
     });
 
