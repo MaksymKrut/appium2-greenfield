@@ -24,7 +24,7 @@ Mocha and Chai. Mocha for test structure setup, BDD layer [Mocha](https://mochaj
 
 6. Put apk file inside assets/apk folder and rename it to testApk.apk
 
-7. Android emulator setup. Start Android emulator. Suggest to start it as standalone app with command line without opening Android Studio for quick further it's settings access. Next steps to do it. a) Execute "`emulator -list-avds`" to list all available emulators and copy desired name, b) Execute "`${ANDROID_HOME}/emulator/emulator -avd {NAME}`" to start it. Emulator started. Open new terminal and execute "`adb devices`". Copy exact emulator name and paste it into Appium desired capabilities settings as "appium:deviceName". Open emulator settings: Emulator window -> ... dots settings menu -> Location -> Search in map search field for "Walmart Supercentre, Baseline Rd, Ottawa" -> choose it as you current location with "SET LOCATION" button.
+7. Android emulator setup. Start Android emulator. Suggest to start it as standalone app with command line without opening Android Studio for quick further it's settings access. Next steps to do it. a) Execute "`emulator -list-avds`" to list all available emulators and copy desired name, b) Execute "`${ANDROID_HOME}/emulator/emulator -avd {NAME}`" to start it. Emulator started. Open new terminal and execute "`adb devices`". Copy exact emulator name and paste it into Appium desired capabilities settings as "appium:deviceName" in utils/driver file.
 
 ## Start tests
 
@@ -57,3 +57,5 @@ https://github.com/appium/appium-uiautomator2-driver#capabilities
 Problem: Not all jukeboxes are active. Solution: Loop through available and get first active.
 Problem: Random state of currently playing artist/song on jukebox page. Can be either big or small album square. Solution: Swipe album up to hide.
 Problem: Random Welcome and Login popups. Solution: Added helper catcher for those popups.
+
+Note: simple no-class PageObject pattern implemented, easily can be extended to class instances.
